@@ -15,6 +15,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Write current time to health.json
+        run: |
+          echo "{\"timestamp\": \"$(date +'%Y-%m-%d %H:%M:%S')\"}" > health.json
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -48,9 +52,9 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker tag my-app docker/calvinlam/hello-world-render-example:$(date +'%Y%m%d%H%M%S')
-          docker tag my-app docker/calvinlam/hello-world-render-example:${{ github.run_number }}
-          docker push docker/calvinlam/hello-world-render-example:${{ github.run_number }}
+          docker tag my-app calvinlam/hello-world-render-example:$(date +'%Y%m%d%H%M%S')
+          docker tag my-app calvinlam/hello-world-render-example:${{ github.run_number }}
+          docker push calvinlam/hello-world-render-example:${{ github.run_number }}
           
 
       - name: Run tests

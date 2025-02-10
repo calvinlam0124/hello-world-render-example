@@ -1,4 +1,6 @@
 const express = require("express");
+const fs = require('fs');
+let date = new Date();
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -9,6 +11,9 @@ const server = app.listen(port, () => console.log(`Example app listening on port
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
 
+
+const data = fs.readFileSync('./health.json', { encoding: 'utf8', flag: 'r' });
+console.log(data);
 const html = `
 <!DOCTYPE html>
 <html>
@@ -54,7 +59,9 @@ const html = `
   </head>
   <body>
     <section>
-      Hello from Render!
+      Hello from Render!<br />
+      ${date.toISOString()}<br />
+      _${data}_
     </section>
   </body>
 </html>
