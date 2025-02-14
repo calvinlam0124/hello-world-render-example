@@ -6,6 +6,10 @@ services:
     depends_on:
       app-build:
         condition: service_completed_successfully
+    working_dir: /app
+    volumes:
+      - .:/app
+
 
   app-build:
     profiles:

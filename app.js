@@ -6,6 +6,33 @@ const port = process.env.PORT || 3001;
 
 app.get("/", (req, res) => res.type('html').send(html));
 
+app.get("/anything",async (req, res) => {
+      const data = await fetch('https://httpbin.org/anything');
+      const json = await data.json();
+      return res.type('json').send(json);
+})
+// sample:
+// get {}.origin which is SERVER_OUTGOING_IP
+//     {
+//       "args": {},
+//       "data": "",
+//       "files": {},
+//       "form": {},
+//       "headers": {
+//       "Accept": "*/*",
+//           "Accept-Encoding": "br, gzip, deflate",
+//           "Accept-Language": "*",
+//           "Host": "httpbin.org",
+//           "Sec-Fetch-Mode": "cors",
+//           "User-Agent": "node",
+//           "X-Amzn-Trace-Id": "Root=1-67aefb3d-426cfe8953aac440634f7ccb"
+//     },
+//     "json": null,
+//     "method": "GET",
+//     "origin": "94.190.225.57",
+//     "url": "https://httpbin.org/anything"
+// }
+
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 server.keepAliveTimeout = 120 * 1000;
@@ -58,6 +85,7 @@ const html = `
     </style>
   </head>
   <body>
+    <a href="/anything">test</a>
     <section>
       Hello from Render!<br />
       ${date.toISOString()}<br />
